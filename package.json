@@ -1,0 +1,39 @@
+{
+	"name": "cypress-projeto",
+	"version": "1.0.0",
+	"main": "index.js",
+	"scripts": {
+		"cy:verify": "cypress verify",
+		"cy:open": "cypress open",
+		"cy:run": "cypress run --spec cypress/e2e/fundamentals/basic.cy.ts",
+		"cy:run:chrome": "cypress run --browser chrome --spec cypress/e2e/fundamentals/basic.cy.ts",
+		"cy:run:firefox": "cypress run --browser firefox --spec cypress/e2e/fundamentals/basic.cy.ts",
+		"clean:reports": "mkdir -p cypress/reports && rm -R -f cypress/reports/* && mkdir cypress/reports/mochareports",
+		"combine-reports": "mochawesome-merge cypress/reports/mocha/*.json > cypress/reports/mochareports/report.json",
+		"generate-report": "marge cypress/reports/mochareports/report.json -f report -o cypress/reports/mochareports",
+		"pretest": "npm run clean:reports",
+		"posttest": "npm run combine-reports && npm run generate-report",
+		"test": "npm run cy:run || npm run posttest",
+		"chrome:test": "npm-run-all pretest cy:run:chrome posttest",
+		"firefox:test": "npm-run-all pretest cy:run:firefox posttest"
+	},
+	"author": "Samuel Freitas",
+	"license": "ISC",
+	"description": "",
+	"dependencies": {
+		"cypress-xpath": "^2.0.0",
+		"prettier": "^2.6.2",
+		"typescript": "^4.7.4"
+	},
+	"devDependencies": {
+		"@cypress/browserify-preprocessor": "^3.0.2",
+		"cypress": "^10.11.0",
+		"cypress-multi-reporters": "^1.6.1",
+		"mocha": "^10.0.0",
+		"mochawesome": "^7.1.3",
+		"mochawesome-merge": "^4.2.1",
+		"mochawesome-report-generator": "^6.2.0",
+		"npm-run-all": "^4.1.5",
+		"tsify": "^5.0.4"
+	}
+}
